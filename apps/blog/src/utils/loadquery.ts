@@ -3,7 +3,7 @@ import {type QueryParams} from 'sanity'
 import {sanityClient} from 'sanity:client'
 
 const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true'
-const token = import.meta.env.SANITY_API_READ_TOKEN
+const token = import.meta.env.PUBLIC_SANITY_API_READ_TOKEN
 
 export async function loadQuery<QueryResponse>({
                                                  query,
@@ -14,7 +14,7 @@ export async function loadQuery<QueryResponse>({
 }) {
   if (visualEditingEnabled && !token) {
     throw new Error(
-      'The `SANITY_API_READ_TOKEN` environment variable is required during Visual Editing.',
+      'The `PUBLIC_SANITY_API_READ_TOKEN` environment variable is required during Visual Editing.',
     )
   }
 
