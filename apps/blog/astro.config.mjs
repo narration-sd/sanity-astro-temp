@@ -1,6 +1,7 @@
 import sanityIntegration from "@sanity/astro";
 import { defineConfig } from "astro/config";
-import node from '@astrojs/node';
+// import node from '@astrojs/node';
+import netlify from '@astrojs/netlify';
 import react from "@astrojs/react";
 import { loadEnv } from 'vite'
 
@@ -39,9 +40,10 @@ export default defineConfig({
   ],
   vite: { resolve: { alias: { lodash : 'lodash-es' } } },
   output: "server",
-  adapter: node({
-    mode: 'standalone'
-  }),
+  // adapter: node({
+  //   mode: 'standalone'
+  // }),
+  adapter: netlify(),
 });
 
 // n.b. pnpm run build normally, then run the result,
