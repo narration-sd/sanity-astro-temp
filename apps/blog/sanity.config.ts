@@ -14,18 +14,16 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { schemaTypes } from "./schemas";
 
 export const projectId = typeof process !== 'undefined'
-  ? process.env.SANITY_STUDIO_PROJECT_ID // || 'rbnafvhk'
+  ? process.env.SANITY_STUDIO_PROJECT_ID
   : import.meta.env.PUBLIC_SANITY_PROJECT_ID
-   // import.meta.env.PUBLIC_SANITY_PROJECT_ID
+
 export const dataset =  typeof process !== 'undefined'
-  ? process.env.SANITY_STUDIO_DATASET // || 'production'
+  ? process.env.SANITY_STUDIO_DATASET
   : import.meta.env.PUBLIC_SANITY_DATASET
 
-const SANITY_STUDIO_PREVIEW_URL = (
-  typeof process !== 'undefined'
-    ? process.env.SANITY_STUDIO_PREVIEW_URL
-    : import.meta.env.PUBLIC_SANITY_STUDIO_PREVIEW_URL
-)
+const SANITY_STUDIO_PREVIEW_URL = typeof process !== 'undefined'
+  ? process.env.SANITY_STUDIO_PREVIEW_URL
+  : import.meta.env.PUBLIC_SANITY_STUDIO_PREVIEW_URL
 
 const homeLocation = {
   title: "Home",
