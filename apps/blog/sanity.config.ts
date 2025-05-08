@@ -13,16 +13,18 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 
 import { schemaTypes } from "./schemas";
 
-export const projectId = process.env.SANITY_STUDIO_PROJECT_ID // || 'rbnafvhk'
+export const projectId = typeof process !== 'undefined'
+  ? process.env.SANITY_STUDIO_PROJECT_ID // || 'rbnafvhk'
+  : import.meta.env.PUBLIC_SANITY_PROJECT_ID
    // import.meta.env.PUBLIC_SANITY_PROJECT_ID
-export const dataset = process.env.SANITY_STUDIO_DATASET // || 'production'
-  // import.meta.env.PUBLIC_SANITY_DATASET
+export const dataset =  typeof process !== 'undefined'
+  ? process.env.SANITY_STUDIO_DATASET // || 'production'
+  : import.meta.env.PUBLIC_SANITY_DATASET
 
 const SANITY_STUDIO_PREVIEW_URL = (
-  process.env.SANITY_STUDIO_PREVIEW_URL
-// import.meta.env.PUBLIC_SANITY_STUDIO_PREVIEW_URL
-//   || 'http://localhost:4321'
-//   || 'https://sa-gnu.netlify.app'
+  typeof process !== 'undefined'
+    ? process.env.SANITY_STUDIO_PREVIEW_URL
+    : import.meta.env.PUBLIC_SANITY_STUDIO_PREVIEW_URL
 )
 
 const homeLocation = {
