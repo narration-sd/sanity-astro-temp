@@ -13,13 +13,16 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 
 import { schemaTypes } from "./schemas";
 
-export const projectId =
-   import.meta.env.PUBLIC_SANITY_PROJECT_ID
-export const dataset = import.meta.env.PUBLIC_SANITY_DATASET
+export const projectId = process.env.SANITY_STUDIO_PROJECT_ID // || 'rbnafvhk'
+   // import.meta.env.PUBLIC_SANITY_PROJECT_ID
+export const dataset = process.env.SANITY_STUDIO_DATASET // || 'production'
+  // import.meta.env.PUBLIC_SANITY_DATASET
 
 const SANITY_STUDIO_PREVIEW_URL = (
-  import.meta.env.PUBLIC_SANITY_STUDIO_PREVIEW_URL
-  || 'http://localhost:4321'
+  process.env.SANITY_STUDIO_PREVIEW_URL
+// import.meta.env.PUBLIC_SANITY_STUDIO_PREVIEW_URL
+//   || 'http://localhost:4321'
+//   || 'https://sa-gnu.netlify.app'
 )
 
 const homeLocation = {
@@ -30,8 +33,8 @@ const homeLocation = {
 export default defineConfig({
   name: "sanity-astro",
   title: "Sanity Astro",
-  projectId,
-  dataset,
+  projectId: projectId,
+  dataset: dataset,
   plugins: [
     structureTool(),
     visionTool(),

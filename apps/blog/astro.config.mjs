@@ -13,8 +13,8 @@ const env = {
 
 // 'sanity' check...
 if (!(env.PUBLIC_SANITY_PROJECT_ID && env.PUBLIC_SANITY_DATASET
-  && env.PUBLIC_SANITY_VIEWER_TOKEN && env.PUBLIC_SANITY_API_VERSION)) {
-  throw new Error ('You have to fill in all your /.env environmental variables, ' +
+  && env.PUBLIC_SANITY_API_READ_TOKEN && env.PUBLIC_SANITY_API_VERSION)) {
+  throw new Error ('You have to fill in all your /.env.development environmental variables, ' +
       'from the example in /.env_example, before you can run this site...'
   )
 }
@@ -28,7 +28,7 @@ export default defineConfig({
       apiVersion: env.PUBLIC_SANITY_API_VERSION,
       useCdn: false,
       perspective: 'previewDrafts',
-      token: env.PUBLIC_SANITY_VIEWER_TOKEN,
+      token: env.PUBLIC_SANITY_API_READ_TOKEN,
       stega: {
         // enabled:true,
         studioUrl: /*env.PUBLIC_SANITY_STUDIO_PREVIEW_URL

@@ -9,7 +9,7 @@ interface Props {
 
 const { title, live } = Astro.props;
 const visualEditingEnabled
-	= (import.meta.env.PUBLIC_SANITY_VISUAL_EDITING === 'true')
+	= (import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true')
 
 // n.b. full render delay timeout can't be set from here, so env read
 // is in script, and we indicate its use here:
