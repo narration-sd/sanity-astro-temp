@@ -1,7 +1,6 @@
 import sanityIntegration from "@sanity/astro";
 import { defineConfig } from "astro/config";
-// import node from '@astrojs/node';
-import netlify from '@astrojs/netlify';
+import netlifyAdapter from '@astrojs/netlify';
 import react from "@astrojs/react";
 import { loadEnv } from 'vite'
 
@@ -19,33 +18,51 @@ if (!(env.PUBLIC_SANITY_PROJECT_ID && env.PUBLIC_SANITY_DATASET
   )
 }
 
+let perspective = 'preview'
+let useCdn = false
+let deployConfig = {};
+
+if (env.PUBLIC_SANITY_PREVIEW_SERVER === "true") {
+  perspective = 'drafts'
+  useCdn = false
+  deployConfig = {
+    output: "server",
+    adapter: netlifyAdapter(),
+    stega: { studioUrl: deployConfig.studioUrl },
+  };
+  console.log("Configuring with Netlify adapter as SSR for visual editing");
+} else {
+  perspective = 'published'
+  useCdn = true
+  deployConfig = { output: "static", adapter: undefined,  stega: undefined };
+  console.log("Configuring as Astro native SSG for public website");
+}
+
+console.log('deployConfig: ' + JSON.stringify( deployConfig));
+console.log('env: ' + JSON.stringify(env.PUBLIC_SANITY_PREVIEW_SERVER));
 // https://astro.build/config
-export default defineConfig({
+// export default defineConfig({
+const finalConfig = defineConfig({
   integrations: [
     sanityIntegration({
       projectId: env.PUBLIC_SANITY_PROJECT_ID,
       dataset: env.PUBLIC_SANITY_DATASET,
       apiVersion: env.PUBLIC_SANITY_API_VERSION,
-      useCdn: false,
-      perspective: 'drafts',
+      useCdn: useCdn,
+      perspective: perspective,
       token: env.PUBLIC_SANITY_API_READ_TOKEN,
-      stega: {
-        // enabled:true,
-        studioUrl: /*env.PUBLIC_SANITY_STUDIO_PREVIEW_URL
-            +*/ env.PUBLIC_SANITY_STUDIO_BASE_PATH,
-      },
-      studioBasePath: /*env.PUBLIC_SANITY_STUDIO_PREVIEW_URL +*/ env.PUBLIC_SANITY_STUDIO_BASE_PATH,
+      stega: deployConfig.stega,
+
+      // studioBasePath: env.PUBLIC_SANITY_STUDIO_BASE_PATH,
     }),
     react(),
   ],
+  output: deployConfig.output,
+  adapter: deployConfig.adapter,
+  // adapter: { name: 'none', version: '0.0.1'/*, adapterFeatures: { buildOutput: "static" }*/ },
+  // output: 'static',
   vite: { resolve: { alias: { lodash : 'lodash-es' } } },
-  output: "server",
-  // adapter: node({
-  //   mode: 'standalone'
-  // }),
-  adapter: netlify(),
 });
 
-// n.b. pnpm run build normally, then run the result,
-// using node dist/server/entry.mjs
-// this will operate normally -- but show the bug!
+console.log('finalConfig: ' + JSON.stringify(finalConfig, null,2));
+export default finalConfig;

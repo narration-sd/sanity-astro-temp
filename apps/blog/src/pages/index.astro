@@ -3,8 +3,18 @@ import { loadQuery } from '../utils/loadquery'
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import Welcome from "../components/Welcome.astro";
+import {sanityClient} from 'sanity:client'
+export async function getStaticPaths() {
+  const posts = await sanityClient.fetch(
+    `*[_type == "post"][] {
+    ...
+  }`)
+  return posts.map((post) => ({
+    params: { slug: post.slug.current },
+  }));
+}
 
-export const prerender = false;
+// export const prerender = false;
 const { data:posts } = await loadQuery({
   query: `*[_type == "post" ] | order(publishedAt desc)`
 });

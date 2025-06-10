@@ -18,13 +18,13 @@ export async function loadQuery<QueryResponse>({
     )
   }
 
-  const perspective = visualEditingEnabled ? 'previewDrafts' : 'published'
+  const perspective = visualEditingEnabled ? 'previews' : 'published'
 
   const {result, resultSourceMap} = await sanityClient.fetch<QueryResponse>(query, params ?? {}, {
     filterResponse: false,
     perspective,
     resultSourceMap: visualEditingEnabled ? 'withKeyArraySelector' : false,
-    stega: visualEditingEnabled,
+    // stega: visualEditingEnabled,
     ...(visualEditingEnabled ? {token} : {}),
     useCdn: !visualEditingEnabled,
   })

@@ -36,44 +36,44 @@ export default defineConfig({
   projectId: projectId,
   dataset: dataset,
   plugins: [
-    structureTool(),
-    visionTool(),
-    presentationTool({
-      previewUrl: SANITY_STUDIO_PREVIEW_URL,
-      title: 'Presentation',
-      resolve: {
-        mainDocuments: defineDocuments([
-          {
-            route: "/posts/:slug",
-            filter: `_type == "post" && (slug.current == $slug || _id == $slug)`,
-          },
-        ]),
-        locations: {
-          settings: defineLocations({
-            locations: [homeLocation],
-            message: "This document is used on all pages",
-            tone: "caution",
-          }),
-          post: defineLocations({
-            select: {
-              title: "title",
-              slug: "slug.current",
-            },
-            resolve: (doc) => ({
-              locations: [
-                doc
-                  ? {
-                    title: doc?.title || "Untitled",
-                    href: `/posts/${doc.slug}`,
-                  }
-                  : null,
-                homeLocation,
-              ].filter(Boolean) as DocumentLocation[],
-            }),
-          }),
-        },
-      },
-    }),
+    // structureTool(),
+    // visionTool(),
+    // presentationTool({
+    //   previewUrl: SANITY_STUDIO_PREVIEW_URL,
+    //   title: 'Presentation',
+    //   resolve: {
+    //     mainDocuments: defineDocuments([
+    //       {
+    //         route: "/posts/:slug",
+    //         filter: `_type == "post" && (slug.current == $slug || _id == $slug)`,
+    //       },
+    //     ]),
+    //     locations: {
+    //       settings: defineLocations({
+    //         locations: [homeLocation],
+    //         message: "This document is used on all pages",
+    //         tone: "caution",
+    //       }),
+    //       post: defineLocations({
+    //         select: {
+    //           title: "title",
+    //           slug: "slug.current",
+    //         },
+    //         resolve: (doc) => ({
+    //           locations: [
+    //             doc
+    //               ? {
+    //                 title: doc?.title || "Untitled",
+    //                 href: `/posts/${doc.slug}`,
+    //               }
+    //               : null,
+    //             homeLocation,
+    //           ].filter(Boolean) as DocumentLocation[],
+    //         }),
+    //       }),
+    //     },
+    //   },
+    // }),
     media(),
     unsplashImageAsset(),
   ],

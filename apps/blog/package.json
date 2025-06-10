@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.6",
+    "@astrojs/check": "^0.9.4",
     "@astrojs/netlify": "^6.3.4",
+    "@astrojs/node": "^9.2.2",
     "@astrojs/prism": "^3.3.0",
     "@astrojs/react": "^4.3.0",
     "@sanity/astro": "^3.2.6",
@@ -34,6 +36,7 @@
     "sanity-plugin-asset-source-unsplash": "^3.0.3",
     "sanity-plugin-media": "^3.0.3",
     "styled-components": "^6.1.18",
+    "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }
 }
