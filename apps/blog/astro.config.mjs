@@ -22,26 +22,29 @@ let perspective = 'preview'
 let useCdn = false
 let deployConfig = {};
 
-if (env.PUBLIC_SANITY_PREVIEW_SERVER === "true") {
+if (env.PUBLIC_SANITY_PREVIEW_SSR === "true") {
   perspective = 'drafts'
   useCdn = false
   deployConfig = {
     output: "server",
     adapter: netlifyAdapter(),
     stega: { studioUrl: deployConfig.studioUrl },
+    studioBasePath: env.PUBLIC_SANITY_STUDIO_BASE_PATH,
   };
   console.log("Configuring with Netlify adapter as SSR for visual editing");
 } else {
   perspective = 'published'
   useCdn = true
-  deployConfig = { output: "static", adapter: undefined,  stega: undefined };
+  deployConfig = {
+    output: "static",
+    adapter: undefined, // these undefines turn off Presentation
+    stega: undefined,
+    studioBasePath: undefined,
+  };
   console.log("Configuring as Astro native SSG for public website");
 }
 
-console.log('deployConfig: ' + JSON.stringify( deployConfig));
-console.log('env: ' + JSON.stringify(env.PUBLIC_SANITY_PREVIEW_SERVER));
 // https://astro.build/config
-// export default defineConfig({
 const finalConfig = defineConfig({
   integrations: [
     sanityIntegration({
@@ -52,17 +55,13 @@ const finalConfig = defineConfig({
       perspective: perspective,
       token: env.PUBLIC_SANITY_API_READ_TOKEN,
       stega: deployConfig.stega,
-
-      // studioBasePath: env.PUBLIC_SANITY_STUDIO_BASE_PATH,
+      studioBasePath: deployConfig.studioBasePath,
     }),
     react(),
   ],
   output: deployConfig.output,
   adapter: deployConfig.adapter,
-  // adapter: { name: 'none', version: '0.0.1'/*, adapterFeatures: { buildOutput: "static" }*/ },
-  // output: 'static',
   vite: { resolve: { alias: { lodash : 'lodash-es' } } },
 });
 
-console.log('finalConfig: ' + JSON.stringify(finalConfig, null,2));
 export default finalConfig;

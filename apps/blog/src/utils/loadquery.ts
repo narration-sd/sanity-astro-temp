@@ -2,7 +2,7 @@
 import {type QueryParams} from 'sanity'
 import {sanityClient} from 'sanity:client'
 
-const ssrServer = import.meta.env.PUBLIC_SANITY_PREVIEW_SERVER === 'true'
+const ssrServer = import.meta.env.PUBLIC_SANITY_PREVIEW_SSR === 'true'
 const visualEditingEnabled = ssrServer && import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true'
 const token = import.meta.env.PUBLIC_SANITY_API_READ_TOKEN
 
