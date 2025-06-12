@@ -2,7 +2,8 @@
 import {type QueryParams} from 'sanity'
 import {sanityClient} from 'sanity:client'
 
-const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true'
+const ssrServer = import.meta.env.PUBLIC_SANITY_PREVIEW_SERVER === 'true'
+const visualEditingEnabled = ssrServer && import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true'
 const token = import.meta.env.PUBLIC_SANITY_API_READ_TOKEN
 
 export async function loadQuery<QueryResponse>({
@@ -22,11 +23,11 @@ export async function loadQuery<QueryResponse>({
 
   const {result, resultSourceMap} = await sanityClient.fetch<QueryResponse>(query, params ?? {}, {
     filterResponse: false,
-    perspective,
+    perspective: perspective,
     resultSourceMap: visualEditingEnabled ? 'withKeyArraySelector' : false,
-    // stega: visualEditingEnabled,
-    ...(visualEditingEnabled ? {token} : {}),
-    useCdn: !visualEditingEnabled,
+    stega: visualEditingEnabled,
+      ...(visualEditingEnabled ? {token} : {}),
+    useCdn: !ssrServer,
   })
 
   return {
