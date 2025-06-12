@@ -25,58 +25,66 @@ const SANITY_STUDIO_PREVIEW_URL = typeof process !== 'undefined'
   ? process.env.SANITY_STUDIO_PREVIEW_URL
   : import.meta.env.PUBLIC_SANITY_STUDIO_PREVIEW_URL
 
+const ssrServer = typeof process !== 'undefined'
+  ? process.env.SANITY_STUDIO_PREVIEW_SSR
+  : import.meta.env.PUBLIC_SANITY_PREVIEW_SSR
+
 const homeLocation = {
   title: "Home",
   href: "/",
 } satisfies DocumentLocation;
+
+const plugins = ssrServer
+  ? [
+      structureTool(),
+      visionTool(),
+      presentationTool({
+        previewUrl: SANITY_STUDIO_PREVIEW_URL,
+        title: 'Presentation',
+        resolve: {
+          mainDocuments: defineDocuments([
+            {
+              route: "/posts/:slug",
+              filter: `_type == "post" && (slug.current == $slug || _id == $slug)`,
+            },
+          ]),
+          locations: {
+            settings: defineLocations({
+              locations: [homeLocation],
+              message: "This document is used on all pages",
+              tone: "caution",
+            }),
+            post: defineLocations({
+              select: {
+                title: "title",
+                slug: "slug.current",
+              },
+              resolve: (doc) => ({
+                locations: [
+                  doc
+                    ? {
+                      title: doc?.title || "Untitled",
+                      href: `/posts/${doc.slug}`,
+                    }
+                    : null,
+                  homeLocation,
+                ].filter(Boolean) as DocumentLocation[],
+              }),
+            }),
+          },
+        },
+      }),
+      media(),
+      unsplashImageAsset(),
+    ]
+  : undefined
 
 export default defineConfig({
   name: "sanity-astro",
   title: "Sanity Astro",
   projectId: projectId,
   dataset: dataset,
-  plugins: [
-    structureTool(),
-    visionTool(),
-    presentationTool({
-      previewUrl: SANITY_STUDIO_PREVIEW_URL,
-      title: 'Presentation',
-      resolve: {
-        mainDocuments: defineDocuments([
-          {
-            route: "/posts/:slug",
-            filter: `_type == "post" && (slug.current == $slug || _id == $slug)`,
-          },
-        ]),
-        locations: {
-          settings: defineLocations({
-            locations: [homeLocation],
-            message: "This document is used on all pages",
-            tone: "caution",
-          }),
-          post: defineLocations({
-            select: {
-              title: "title",
-              slug: "slug.current",
-            },
-            resolve: (doc) => ({
-              locations: [
-                doc
-                  ? {
-                    title: doc?.title || "Untitled",
-                    href: `/posts/${doc.slug}`,
-                  }
-                  : null,
-                homeLocation,
-              ].filter(Boolean) as DocumentLocation[],
-            }),
-          }),
-        },
-      },
-    }),
-    media(),
-    unsplashImageAsset(),
-  ],
+  plugins: plugins,
   schema: {
     types: schemaTypes,
   },
