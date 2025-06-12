@@ -4,12 +4,14 @@ import {VisualEditing} from '@sanity/astro/visual-editing'
 
 interface Props {
 	title: string;
-	live:boolean;
+	live:boolean;  // *todo* any reason for live, anymore?
 }
 
 const { title, live } = Astro.props;
+const ssrServer
+  = (import.meta.env.PUBLIC_SANITY_PREVIEW_SSR === 'true')
 const visualEditingEnabled
-	= (import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true')
+  = (ssrServer && import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === 'true')
 
 // n.b. full render delay timeout can't be set from here, so env read
 // is in script, and we indicate its use here:
@@ -56,8 +58,10 @@ globalThis.live = live
 				<slot />
 			</main>
 		</div>
-		{ live && <VisualEditing enabled={visualEditingEnabled} zIndex={1000} /> }
+		{ ssrServer && live && <VisualEditing enabled={visualEditingEnabled} zIndex={1000} /> }
 		<script>
+      // *todo* this entire script looks unneeded now, but check
+
 			// n.b. this is a rather unusual approach, used because sanity-astro
 			// doesn't account for live conditioning of VisualEditing, and Astro's
 			// abilities don't include a way to directly condition its presence.
