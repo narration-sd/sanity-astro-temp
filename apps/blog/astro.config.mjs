@@ -28,7 +28,7 @@ if (env.PUBLIC_SANITY_PREVIEW_SSR === "true") {
   deployConfig = {
     output: "server",
     adapter: netlifyAdapter(),
-    stega: { studioUrl: deployConfig.studioUrl },
+    stega: { studioUrl: env.PUBLIC_SANITY_STUDIO_BASE_PATH },
     studioBasePath: env.PUBLIC_SANITY_STUDIO_BASE_PATH,
   };
   console.log("Configuring with Netlify adapter as SSR for visual editing");
