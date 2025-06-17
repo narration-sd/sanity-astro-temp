@@ -18,7 +18,7 @@ if (!(env.PUBLIC_SANITY_PROJECT_ID && env.PUBLIC_SANITY_DATASET
   )
 }
 
-let perspective = 'preview'
+let perspective = 'published'
 let useCdn = false
 let deployConfig = {};
 

@@ -15,9 +15,9 @@
     "lint": "turbo run lint"
   },
   "devDependencies": {
-    "@sanity/prettier-config": "^1.0.3",
+    "@sanity/prettier-config": "^1.0.4",
     "@turbo/gen": "^2.5.4",
-    "eslint": "^9.28.0",
+    "eslint": "^9.29.0",
     "eslint-config-custom": "*",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
