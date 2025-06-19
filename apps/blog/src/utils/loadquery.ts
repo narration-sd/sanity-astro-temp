@@ -21,7 +21,13 @@ export async function loadQuery<QueryResponse>({
 
   const perspective = visualEditingEnabled ? 'previews' : 'published'
 
-  const {result, resultSourceMap} = await sanityClient.fetch<QueryResponse>(query, params ?? {}, {
+  interface QueryResponseType {
+    query: string;
+    result: any[]; // Or a more specific type if you know the shape
+    resultSourceMap?: any; // Optional, if you use resultSourceMap
+  }
+
+  const {result, resultSourceMap} = await sanityClient.fetch<QueryResponseType>(query, params ?? {}, {
     filterResponse: false,
     perspective: perspective,
     resultSourceMap: visualEditingEnabled ? 'withKeyArraySelector' : false,

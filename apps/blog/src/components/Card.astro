@@ -26,15 +26,13 @@ const { post } = Astro.props;
     )
   }
   <div class="card__container">
-    <h3 class="card__title">
-      <script is:inline define:vars={{ title: post.title, slug: post.slug.current }}>
-        document.write(
-          window.location !== window.parent.location
-            ? `<span class="card__title-text">${title}</span>`
-            : `<a class="card__link" href="/posts/${slug}">${title}</a>`
-        );
-      </script>
-    </h3>
+    <script is:inline define:vars={{ title: post.title, slug: post.slug.current }}>
+      document.write(
+        window.location !== window.parent.location
+          ? `<span class="card__title-text">${title}</span>`
+          : `<a class="card__link" href="/posts/${slug}"><h3 class="card__title">${title}</h3></a>`
+      );
+    </script>
     <p class="card__excerpt">{post.excerpt}</p>
     <p class="card__date">
       {formatDate(post._createdAt)}
