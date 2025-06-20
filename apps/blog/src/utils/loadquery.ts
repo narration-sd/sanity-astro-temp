@@ -19,7 +19,7 @@ export async function loadQuery<QueryResponse>({
     )
   }
 
-  const perspective = visualEditingEnabled ? 'previews' : 'published'
+  const perspective = visualEditingEnabled ? 'drafts' : 'published'
 
   interface QueryResponseType {
     query: string;
@@ -29,7 +29,6 @@ export async function loadQuery<QueryResponse>({
 
   const {result, resultSourceMap} = await sanityClient.fetch<QueryResponseType>(query, params ?? {}, {
     filterResponse: false,
-    // @ts-expect-error
     perspective: perspective,
     resultSourceMap: visualEditingEnabled ? 'withKeyArraySelector' : false,
     stega: visualEditingEnabled,
