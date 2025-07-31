@@ -43,3 +43,4 @@ apps/blog/.env.development
 
 # Local Netlify folder
 .netlify
+/.env
