@@ -1,19 +1,23 @@
 ---
-import { loadQuery } from '../utils/loadquery'
-import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
-import Welcome from "../components/Welcome.astro";
-
+// import { loadQuery } from '../utils/loadquery'
+// import Layout from "../layouts/Layout.astro";
+// import Card from "../components/Card.astro";
+// import Welcome from "../components/Welcome.astro";
+//
 export const prerender = false;
-const { data:posts } = await loadQuery({
-  query: `*[_type == "post" ] | order(publishedAt desc)`
-});
+// const { data:posts } = await loadQuery({
+//   query: `*[_type == "post" ] | order(publishedAt desc)`
+// });
 ---
 
-<Layout title="Welcome to Sanity Astro Presentation." live>
-  <section>
-    {posts.length
-      ? posts.map((post) => <Card post={post} />)
-      : <Welcome />}
-  </section>
-</Layout>
+<!--<Layout title="Welcome to Sanity Astro Presentation." live>-->
+<!--  <section>-->
+<!--    {posts.length-->
+<!--      ? posts.map((post) => <Card post={post} />)-->
+<!--      : <Welcome />}-->
+<!--  </section>-->
+<!--</Layout>-->
+
+<div>
+  <h2>I'm just barely here -- Studio is the interest...</h2>
+</div>
