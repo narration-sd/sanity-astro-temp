@@ -1,23 +1,16 @@
 ---
-// import { loadQuery } from '../utils/loadquery'
-// import Layout from "../layouts/Layout.astro";
-// import Card from "../components/Card.astro";
-// import Welcome from "../components/Welcome.astro";
-//
 export const prerender = false;
-// const { data:posts } = await loadQuery({
-//   query: `*[_type == "post" ] | order(publishedAt desc)`
-// });
 ---
 
-<!--<Layout title="Welcome to Sanity Astro Presentation." live>-->
-<!--  <section>-->
-<!--    {posts.length-->
-<!--      ? posts.map((post) => <Card post={post} />)-->
-<!--      : <Welcome />}-->
-<!--  </section>-->
-<!--</Layout>-->
-
-<div>
+<div class="center">
   <h2>I'm just barely here -- Studio is the interest...</h2>
+  <h3>(for that,
+    <a href="http://localhost:4321/studio" target="_blank">
+      http://localhost:4321/studio)</a></h3>
 </div>
+
+<style>
+  .center {
+    text-align: center;
+  }
+</style>
