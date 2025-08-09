@@ -28,6 +28,7 @@ apps/blog/.env.development
 .env.development.local
 .env.test.local
 .env.production.local
+/.env
 
 # turbo
 .turbo
@@ -43,3 +44,4 @@ apps/blog/.env.development
 
 # Local Netlify folder
 .netlify
+

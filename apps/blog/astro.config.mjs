@@ -38,7 +38,18 @@ export default defineConfig({
     }),
     react(),
   ],
-  vite: { resolve: { alias: { lodash : 'lodash-es' } } },
+  vite: {
+    optimizeDeps: {
+      force: true,
+      include: [
+        'sanity/**/*',
+        'sanity-plugin-media/**/*',
+        'sanity-plugin-asset-source-unsplash/**/*',
+        'visual-editing/**/*',
+        '@sanity/vision/**/*',
+      ],
+    },
+  },
   output: "server",
   // adapter: node({
   //   mode: 'standalone'
